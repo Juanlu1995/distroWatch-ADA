@@ -31,6 +31,8 @@ $queryResult = $pdo->query("SELECT * FROM distro WHERE id=$id");
 <body>
 <div class="container">
 
+    <h1>Distribución: </h1>
+    <br>
     <ul>
         <li><a class="btn btn-primary" href="index.php">Inicio</a></li>
     </ul>

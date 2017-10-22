@@ -77,7 +77,7 @@ if (!empty($_POST)) {
 
 <div class="container">
     <h1>Añadir distribución.</h1>
-
+    <br>
     <ul>
         <li><a class="btn btn-primary" href="index.php">Inicio</a></li>
     </ul>
