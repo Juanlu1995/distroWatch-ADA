@@ -15,25 +15,40 @@ $vacio = 'El campo no puede estar vacío';
 
 if (!empty($_POST)) {
 
+    $name = $_POST['name'];
+    $osType = $_POST['osType'];
+    $basedOn = $_POST['basedOn'];
+    $origin = $_POST['origin'];
+    $desktop = $_POST['desktop'];
+    $architecture = $_POST['architecture'];
+    $category = $_POST['category'];
+    $status = $_POST['status'];
+
+
     if (strlen($_POST['name']) === 0) {
-        $errors['Nombre empty'] = $vacio;
-    } else {
-        $name = $_POST['name'];
+        $errors['name empty'] = $vacio;
     }
     if (strlen($_POST['osType']) === 0) {
         $errors['osType empty'] = $vacio;
-    } else {
-        $osType = $_POST['osType'];
     }
-    if (strlen(($_POST['basedOn'])) === 0) {
-        $basedOn = "";
-    } else {
-        $basedOn = $_POST['basedOn'];
-    }
-    if (strlen(($_POST['origin'])) === 0) {
-       $origin = "";
-    } else {
-        $origin = $_POST['origin'];
+
+    if (empty($errors)) {
+
+        $sql = "INSERT INTO distro (name, osType, basedOn, origin, desktop, architecture, category, status) VALUES (:name, :osType, :basedOn, :origin, :desktop, :architecture, :category, :status)";
+
+        $result = $pdo->prepare($sql);
+
+        $result->execute([
+            'name' => $name,
+            'osType' => $osType,
+            'basedOn' => $basedOn,
+            'origin' => $origin,
+            'desktop' => $desktop,
+            'architecture' => $architecture,
+            'category' => $category,
+            'status' => $status
+        ]);
+        header('Location: index.php');
     }
 }
 
@@ -61,22 +76,29 @@ if (!empty($_POST)) {
 
 
 <div class="container">
-    <ul>
-        <li><a href="index.php.php" class="btn btn-primary" href="index.php.php">Inicio</a></li>
-    </ul>
     <h1>Añadir distribución.</h1>
+
+    <ul>
+        <li><a class="btn btn-primary" href="index.php">Inicio</a></li>
+    </ul>
     <form action="add.php" method="post">
         <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Nombre">
+            <input type="text" name="name" id="name" class="form-control" placeholder="Nombre" required>
         </div>
+        <?php if (isset($errors['name empty'])): ?>
+            <p class="bg-danger"><?= $errors['name empty'] ?></p>
+        <?php endif; ?>
         <div class="form-group">
             <label for="">Tipo de OS</label>
-            <input type="text" name="osType" id="osType" class="form-control" placeholder="Tipo de OS">
+            <input type="text" name="osType" id="osType" class="form-control" placeholder="Tipo de OS" required>
         </div>
+        <?php if (isset($errors['osType empty'])): ?>
+            <p class="bg-danger"><?= $errors['osType empty'] ?></p>
+        <?php endif; ?>
         <div class="form-group">
             <label for="">Basado en:</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Basado en...">
+            <input type="text" name="basedOn" id="basedOn" class="form-control" placeholder="Basado en...">
         </div>
         <div class="form-group">
             <label for="">Origen</label>

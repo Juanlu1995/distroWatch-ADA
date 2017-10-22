@@ -31,7 +31,7 @@ $queryResult = $pdo->query("SELECT * FROM distro");
             <div class="list-group">
                 <a href="distro.php?id=<?=$row['id']?>" class="list-group-item list-group-item-action active"><?= $row['name'] ?></a>
                 <a href="#" class="list-group-item list-group-item-action"><?= $row['osType'] ?></a>
-                <a href="#" class="list-group-item list-group-item-action disabled"><?= $row['basedOn'] ?></a>
+                <?php if (strlen($row['basedOn']) > 0): ?><a href="#" class="list-group-item list-group-item-action disabled"><?= $row['basedOn'] ?></a> <?php endif ?>
             </div>
         <? endwhile; ?>
     </div>
